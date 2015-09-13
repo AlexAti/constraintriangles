@@ -3,15 +3,30 @@
               [reagent.session :as session]
               [secretary.core :as secretary :include-macros true]
               [goog.events :as events]
-              [goog.history.EventType :as EventType])
+              [goog.history.EventType :as EventType]
+              [constraintriangles.svg :refer [svg svg-line svg-grid svg-rect svg-arc]])
     (:import goog.History))
+
+;; -------------------------
+;; Components
+
+ (defn slider []
+   [:input {:type "range"
+            ;:value (:freq @sound)
+            :min 0 :max 180
+            ;:on-change #(update-freq! (.-target.value %))
+            }])
 
 ;; -------------------------
 ;; Views
 
 (defn home-page []
   [:div [:h2 "Welcome to constraintriangles"]
-   [:div [:a {:href "#/about"} "go to about page"]]])
+    [:div [:a {:href "#/about"} "go to about page"]]
+    [slider]
+    (svg 0 0 1000 500
+      (svg-grid 0 0 1000 500 25)
+      (svg-arc))])
 
 (defn about-page []
   [:div [:h2 "About constraintriangles"]
