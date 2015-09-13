@@ -30,7 +30,12 @@
 
 (defn about-page []
   [:div [:h2 "About constraintriangles"]
-   [:div [:a {:href "#/"} "go to the home page"]]])
+    [:div [:a {:href "#/"} "go to the home page"]]
+    [:div
+      [:p "Hello!"]
+      [:p "This is a basic experiment with constraint logic in the browser."]
+      [:p "You can find the code in "[:a {:href "https://github.com/AlexAti/constraintriangles"} "this repo."]]
+      [:p "If you want to dig a little bit deeper, google clojurescript, reagent and core.logic"]]])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
