@@ -8,14 +8,22 @@
     (:import goog.History))
 
 ;; -------------------------
+;; State management
+
+(defonce app-state (atom {:angle 20}))
+
+;; -------------------------
 ;; Components
 
- (defn slider []
-   [:input {:type "range"
-            ;:value (:freq @sound)
-            :min 0 :max 180
-            ;:on-change #(update-freq! (.-target.value %))
-            }])
+(defn slider []
+  [:input {:type "range"
+           :value (:angle @app-state)
+           :min 20 :max 180
+           :on-change #(swap! app-state assoc :angle (.-target.value %))
+           }])
+
+(defn label []
+  [:p (:angle @app-state)])
 
 ;; -------------------------
 ;; Views
@@ -24,8 +32,9 @@
   [:div [:h2 "Welcome to constraintriangles"]
     [:div [:a {:href "#/about"} "go to about page"]]
     [slider]
+    [label]
     (svg 0 0 1000 500
-      (svg-grid 0 0 1000 500 25)
+      (svg-grid 0 0 1000 500 (:angle @app-state))
       (svg-arc))])
 
 (defn about-page []
@@ -35,7 +44,7 @@
       [:p "Hello!"]
       [:p "This is a basic experiment with constraint logic in the browser."]
       [:p "You can find the code in "[:a {:href "https://github.com/AlexAti/constraintriangles"} "this repo."]]
-      [:p "If you want to dig a little bit deeper, google clojurescript, reagent and core.logic"]]])
+      [:p "If you want to dig a little bit deeper, google the following subjects: clojurescript, reagent and core.logic."]]])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
