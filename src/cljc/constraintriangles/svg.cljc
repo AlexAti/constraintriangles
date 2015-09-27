@@ -25,8 +25,8 @@
     (for [j (range 0 (/ h s))] ; rows
       (svg-line x (+ y (* s j)) (+ x w) (+ y (* s j)))))))
 
-(defn svg-arc []
+(defn svg-arc [[x1 y1] [r1 r2] xrot [large? sweep?] [x2 y2]]
   "Returns a hiccup-style svg arc"
-  [:path {:d (str "M300,200
-                   a150,150 0 1,0 150,-150")
+  [:path {:d (str "M" x1 "," y1
+                  "A" r1 "," r2 " " xrot " " large? "," sweep? " " x2 "," y2)
           :fill "none" :stroke "red" :stroke-width 5}])

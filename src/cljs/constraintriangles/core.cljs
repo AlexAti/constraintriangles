@@ -10,20 +10,20 @@
 ;; -------------------------
 ;; State management
 
-(defonce app-state (atom {:angle 20}))
+(defonce app-state (atom {:radius 400}))
 
 ;; -------------------------
 ;; Components
 
 (defn slider []
   [:input {:type "range"
-           :value (:angle @app-state)
-           :min 20 :max 180
-           :on-change #(swap! app-state assoc :angle (.-target.value %))
+           :value (:radius @app-state)
+           :min 100 :max 1000
+           :on-change #(swap! app-state assoc :radius (.-target.value %))
            }])
 
 (defn label []
-  [:p (:angle @app-state)])
+  [:p (:radius @app-state)])
 
 ;; -------------------------
 ;; Views
@@ -33,9 +33,17 @@
     [:div [:a {:href "#/about"} "go to about page"]]
     [slider]
     [label]
-    (svg 0 0 1000 500
-      (svg-grid 0 0 1000 500 (:angle @app-state))
-      (svg-arc))])
+    (let [r (:radius @app-state)
+          [x y] [350 150]
+          [w h] [300 160]
+          a [(/ (+ x x w) 2) y]
+          b [x (+ h y)]
+          c [(+ x w) (+ h y)]]
+      (svg 0 0 1000 500
+        (svg-grid 0 0 1000 500 50)
+        (svg-arc a [r r] 0 [0 1] b)
+        (svg-arc b [r r] 0 [0 1] c)
+        (svg-arc c [r r] 0 [0 1] a)))])
 
 (defn about-page []
   [:div [:h2 "About constraintriangles"]
