@@ -19,8 +19,8 @@
   [:input {:type "range"
            :value (:radius @app-state)
            :min 100 :max 1000
-           :on-change #(swap! app-state assoc :radius (.-target.value %))
-           }])
+           :on-change #(swap! app-state assoc :radius (.-target.value %))}])
+
 
 (defn label []
   [:p (:radius @app-state)])
